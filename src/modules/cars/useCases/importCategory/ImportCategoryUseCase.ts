@@ -2,6 +2,7 @@ import csvParse from 'csv-parse';
 import fs from 'fs';
 import { inject, injectable } from 'tsyringe';
 
+import { deleteFile } from '../../../../utils/file';
 import { ICategoriesRepository } from '../../repositories/ICategoriesRepository';
 
 interface IImportCategory {
@@ -31,7 +32,7 @@ class ImportCategoryUseCase {
           categories.push({ name, description });
         })
         .on('end', () => {
-          fs.promises.unlink(file.path);
+          deleteFile(file.path);
           resolve(categories);
         })
         .on('error', (err) => {
