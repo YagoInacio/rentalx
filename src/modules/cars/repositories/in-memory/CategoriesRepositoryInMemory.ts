@@ -8,14 +8,13 @@ class CategoriesRepositoryInMemory implements ICategoriesRepository {
   categories: Category[] = [];
 
   async findByName(name: string): Promise<Category> {
-    const category = this.categories.find((category) => category.name === name);
-    return category;
+    return this.categories.find((category) => category.name === name);
   }
-  async list(): Promise<Category[]> {
-    const all = this.categories;
 
-    return all;
+  async list(): Promise<Category[]> {
+    return this.categories;
   }
+
   async create({ name, description }: ICreateCategoryDTO): Promise<void> {
     const category = new Category();
 
