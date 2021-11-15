@@ -1,8 +1,10 @@
+import { IMailVariablesDTO } from './dtos/IMailVariablesDTO';
+
 interface IMailProvider {
   sendMail(
     to: string,
     subject: string,
-    variables: any,
+    variables: IMailVariablesDTO,
     path: string
   ): Promise<void>;
 }
