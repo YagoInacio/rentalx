@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import { sign, verify } from 'jsonwebtoken';
 import { inject, injectable } from 'tsyringe';
 
@@ -41,7 +42,7 @@ class RefreshTokenUseCase {
       throw new AppError('Refresh token does not exist!');
     }
 
-    if (userToken.expirationDate < new Date()) {
+    if (dayjs(userToken.expirationDate).isBefore(new Date())) {
       throw new AppError('Refresh token expired');
     }
 
