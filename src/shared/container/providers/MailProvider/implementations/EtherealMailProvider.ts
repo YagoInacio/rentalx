@@ -22,9 +22,9 @@ class EtherealMailProvider implements IMailProvider {
           },
         });
         this.client = transporter;
-        console.log('[MAIL] Test account created!');
+        console.log('🚀 [MAIL] Test account created!');
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log('❌ ', err));
   }
 
   async sendMail(
