@@ -1,4 +1,5 @@
 import dayjs from 'dayjs';
+import { resolve } from 'path';
 import { inject, injectable } from 'tsyringe';
 import { v4 as uuidV4 } from 'uuid';
 
@@ -21,6 +22,15 @@ class SendForgotPasswordMailUseCase {
   async execute(email: string): Promise<void> {
     const user = await this.usersRepository.findByEmail(email);
 
+    const templatePath = resolve(
+      __dirname,
+      '..',
+      '..',
+      'views',
+      'emails',
+      'forgotPassword.hbs'
+    );
+
     if (!user) {
       throw new AppError('User does not exist');
     }
@@ -30,13 +40,19 @@ class SendForgotPasswordMailUseCase {
     await this.usersTokensRepository.create({
       refreshToken: token,
       user,
-      expirationDate: dayjs().add(3, 'hour').toDate(),
+      expirationDate: dayjs().add(3, 'hours').toDate(),
     });
+
+    const variables = {
+      name: user.name,
+      link: `${process.env.FORGOT_MAIL_URL}${token}`,
+    };
 
     await this.mailProvider.sendMail(
       email,
       'recuperacao de senha',
-      `O link para o reset e ${token}`
+      variables,
+      templatePath
     );
   }
 }
