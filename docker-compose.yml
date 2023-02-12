@@ -28,5 +28,5 @@ volumes:
 
 networks: 
   default: 
-    external: 
-      name: rentx-network
+    name: rentx-network
+      
