@@ -14,8 +14,14 @@ class CarsRepositoryInMemory implements ICarsRepository {
     fineAmount,
     brand,
     categoryId,
+    specifications,
+    id,
   }: ICreateCarDTO): Promise<Car> {
-    const car = new Car();
+    let index;
+    if (id) {
+      index = this.cars.findIndex((car) => car.id === id);
+    }
+    const car = id ? this.cars[index] : new Car();
 
     Object.assign(car, {
       name,
@@ -25,9 +31,14 @@ class CarsRepositoryInMemory implements ICarsRepository {
       fineAmount,
       brand,
       categoryId,
+      specifications,
     });
 
-    this.cars.push(car);
+    if (id) {
+      this.cars[index] = car;
+    } else {
+      this.cars.push(car);
+    }
 
     return car;
   }
@@ -53,6 +64,10 @@ class CarsRepositoryInMemory implements ICarsRepository {
     }
 
     return cars;
+  }
+
+  async findById(id: string): Promise<Car> {
+    return this.cars.find((car) => car.id === id);
   }
 }
 
