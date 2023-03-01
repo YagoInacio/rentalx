@@ -43,3 +43,14 @@
 **RN**
 - O usuário deve poder cadastrar mais de uma imagem para o mesmo carro
 - O usuário responsável pelo cadastro deve ser um usuário admin
+
+### Aluguel de carro
+
+**RF**
+- Deve ser possível cadastrar um aluguel
+
+**RN**
+- O aluguel deve ter duracao minima de 24 horas
+- Nao deve ser possivel cadastrar um aluguel caso ja exista um aberto para o mesmo usuario
+- Nao deve ser possivel cadastrar um aluguel caso ja exista um aberto para o mesmo carro
+- O usuario deve estar logado na aplicacao
